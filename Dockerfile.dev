@@ -1,0 +1,8 @@
+FROM python:3.12
+WORKDIR /code
+RUN pip install poetry
+COPY . /code/
+RUN poetry config virtualenvs.create false \
+  && poetry install --no-dev --no-interaction --no-ansi
+EXPOSE 8000
+CMD ["poetry", "run", "uvicorn", "app.main:todo_server", "--host", "0.0.0.0", "--reload"]
